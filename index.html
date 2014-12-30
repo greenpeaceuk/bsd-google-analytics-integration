@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Google Analytics Integration : Internally developed Google Analytics Integration library for use on sites that use the Blue State Digital Tools. Currently used on over 200 websites.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Google Analytics Integration</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/bluestatedigital/bsd-google-analytics-integration">View on GitHub</a>
+
+          <h1 id="project_title">Google Analytics Integration</h1>
+          <h2 id="project_tagline">Internally developed Google Analytics Integration library for use on sites that use the Blue State Digital Tools. Currently used on over 200 websites.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/bluestatedigital/bsd-google-analytics-integration/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/bluestatedigital/bsd-google-analytics-integration/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="blue-state-digital-google-analytics-integration-script" class="anchor" href="#blue-state-digital-google-analytics-integration-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Blue State Digital Google Analytics Integration Script</h1>
+
+<p>Google Analytics Integration library for use on sites that use the BSD Tools, developed by Blue State Digital agency employees, and available for public use under the Apache 2 license. </p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>In order to correctly install the <code>ga_integration-min.js</code> snippet, you need to break the standard Google Analytics snippet in half. This is so that the custom variables set in the script set before the <code>_trackPageview</code>, but after the <code>setDomainName</code> call is set. </p>
+
+<div class="highlight highlight-html"><pre><span class="pl-c">&lt;!-- START Google Analytics --&gt;</span>
+<span class="pl-s2">&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s1"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span>&gt;</span>
+<span class="pl-s2">    <span class="pl-s">var</span> _gaq <span class="pl-k">=</span> _gaq <span class="pl-k">||</span> [];</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">'</span>_setAccount<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>&lt;!--place id here--&gt;<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">"</span>_setDomainName<span class="pl-pds">"</span></span>, location.<span class="pl-sc">hostname</span>.<span class="pl-s3">split</span>(<span class="pl-s1"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>).<span class="pl-s3">slice</span>(<span class="pl-k">-</span><span class="pl-c1">2</span>).<span class="pl-s3">join</span>(<span class="pl-s1"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>)]);</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">"</span>_setAllowAnchor<span class="pl-pds">"</span></span>, <span class="pl-c1">true</span>]);</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">'</span>_setAllowLinker<span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>]);</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">'</span>_setSiteSpeedSampleRate<span class="pl-pds">'</span></span>, <span class="pl-c1">20</span>])</span>
+<span class="pl-s2">&lt;/<span class="pl-ent">script</span>&gt;</span>
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>//s.bsd.net/bsdaction/default/page/-/js/analytics/ga_integration-min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+<span class="pl-s2">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s2">    _gaq.<span class="pl-s3">push</span>([<span class="pl-s1"><span class="pl-pds">'</span>_trackPageview<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s2">    (<span class="pl-st">function</span>() {</span>
+<span class="pl-s2">        <span class="pl-s">var</span> ga <span class="pl-k">=</span> <span class="pl-s3">document</span>.<span class="pl-s3">createElement</span>(<span class="pl-s1"><span class="pl-pds">'</span>script<span class="pl-pds">'</span></span>); ga.<span class="pl-sc">type</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span>; ga.async <span class="pl-k">=</span> <span class="pl-c1">true</span>;</span>
+<span class="pl-s2">        ga.<span class="pl-sc">src</span> <span class="pl-k">=</span> (<span class="pl-s1"><span class="pl-pds">'</span>https:<span class="pl-pds">'</span></span> <span class="pl-k">==</span> <span class="pl-s3">document</span>.<span class="pl-sc">location</span>.<span class="pl-sc">protocol</span> <span class="pl-k">?</span> <span class="pl-s1"><span class="pl-pds">'</span>https://ssl<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>http://www<span class="pl-pds">'</span></span>) <span class="pl-k">+</span> <span class="pl-s1"><span class="pl-pds">'</span>.google-analytics.com/ga.js<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s2">        <span class="pl-s">var</span> s <span class="pl-k">=</span> <span class="pl-s3">document</span>.<span class="pl-s3">getElementsByTagName</span>(<span class="pl-s1"><span class="pl-pds">'</span>script<span class="pl-pds">'</span></span>)[<span class="pl-c1">0</span>]; s.<span class="pl-sc">parentNode</span>.<span class="pl-s3">insertBefore</span>(ga, s);</span>
+<span class="pl-s2">    })();</span>
+<span class="pl-s2">&lt;/<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-c">&lt;!-- END Google Analytics --&gt;</span></pre></div>
+
+<h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<h3>
+<a id="e-commerce" class="anchor" href="#e-commerce" aria-hidden="true"><span class="octicon octicon-link"></span></a>E-Commerce</h3>
+
+<p>All contributions are tracked by default as e-commerce transactions, with the product name set to the form name and the category set to the type of contribution. Different types include the various combinations of Recurring, Quick Donate, and Ticket-based contributions. </p>
+
+<h3>
+<a id="ga-event-categories" class="anchor" href="#ga-event-categories" aria-hidden="true"><span class="octicon octicon-link"></span></a>GA Event Categories</h3>
+
+<ul>
+<li>Completions: Tracks completed BSD Actions in the case of signups, ecommerce and quick-donate opt-in. The ecommerce event is duplicative of the E-Commerce module data, but is less accurate because the associated values are rounded.</li>
+<li>PDF Clicks: This tracks clicks on links to a pdf.</li>
+<li>Form Submits: Tracks all form submits, regardless of the outcome.</li>
+<li>Errors: Validation errors in Signup, Contribution and Share.</li>
+<li>Error Log: JavaScript Errors</li>
+<li>Exits: Clicks on links to a different domain</li>
+<li>Mailcheck: catches mis-spelled email addresses</li>
+<li>Duplication of the Social Events</li>
+<li>Tests: Data from our Optimizely experiments running on the page</li>
+</ul>
+
+<h3>
+<a id="social-tracking" class="anchor" href="#social-tracking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Social Tracking</h3>
+
+<p>By default, the following things, when properly configured, are automatically tracked as social tracking and duplicated to event tracking:</p>
+
+<ul>
+<li>Facebook Likes, Clicks to Facebook Shares, and Clicks to Facebook</li>
+<li>All Twitter intents events, including callbacks for completed tweets and follows. </li>
+<li>External clicks to Pinterest, Facebook, Twitter and YouTube. </li>
+</ul>
+
+<h3>
+<a id="custom-variables" class="anchor" href="#custom-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Variables</h3>
+
+<ol>
+<li>Source: Captures the value of a ?source parameter in the URL</li>
+<li>msid: Grabs the obfuscated mailing_send_id cookie when it's available. This can be decoded by the analytics team and made to associate traffic with a particular mailing (in the absence of proper tagging)</li>
+<li>Has GUID: Tags whether a visitor has a guid cookie at the start of their visit. </li>
+<li>Has SPUD:Tags whether a visitor has a spud cookie at the start of their visit. </li>
+<li>Subsource: Captures the value of a ?subsource parameter in the URL</li>
+</ol>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>The behvaior of the library can be configured by the <code>ga_integration_config</code> global object.</p>
+
+<p>The configuration attributes are:</p>
+
+<ul>
+<li>
+<code>bsddomain</code> - Set to one of the bsd subdomains (e.g. <code>https://donate.domain.org</code>, or <code>//donate-domain.org</code>) for the purposes of grabbing LOE information or loading the SPUD script. To avoid mixed content errors, this domain should support HTTPS.</li>
+<li>
+<code>cookiedomain</code> - if this isn't set manually, the library will just use the <code>location.hostname.split</code> method used in the above snippet on the <code>_setDomainName</code> call to grab the current domain.</li>
+<li>
+<code>nocookie</code> - Set to <code>true</code> if you want to prevent the library from using cookies. This disables any of the tracking features that rely on cookies. </li>
+<li>
+<code>msid_seed</code> - passes the actual <code>mailing_send_id</code> instead of the obfuscated <code>mailing_send_id</code> that is set by default on the mailing cookie. Should always set it if we can, especially for sites using the BSD mailer. Contact BSD to find out this value. </li>
+<li>
+<code>nospud</code> - Set to <code>true</code> to disable SPUD features. (Default: <code>false</code>)</li>
+<li>
+<code>noloe</code> - Set to <code>true</code> to disable LOE usage. (Default: <code>false</code>)</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Google Analytics Integration maintained by <a href="https://github.com/bluestatedigital">bluestatedigital</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-4339126-9");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
