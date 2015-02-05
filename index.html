@@ -71,7 +71,7 @@
 
 <ul>
 <li>Completions: Tracks completed BSD Actions in the case of signups, ecommerce and quick-donate opt-in. The ecommerce event is duplicative of the E-Commerce module data, but is less accurate because the associated values are rounded.</li>
-<li>PDF Clicks: This tracks clicks on links to a pdf.</li>
+<li>File Clicks: tracks clicks on files with the the <code>file_extensions</code> configuration attribute (see below). If no extensions are specified, will only track clicks on pdfs.</li>
 <li>Form Submits: Tracks all form submits, regardless of the outcome.</li>
 <li>Errors: Validation errors in Signup, Contribution and Share.</li>
 <li>Error Log: JavaScript Errors</li>
@@ -104,9 +104,14 @@
 </ol>
 
 <h3>
-<a id="file-tracking" class="anchor" href="#file-tracking" aria-hidden="true"><span class="octicon octicon-link"></span></a>File Tracking</h3>
+<a id="traffic-source-integration" class="anchor" href="#traffic-source-integration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Traffic Source Integration</h3>
 
-<p>By default, GAI will track clicks on pdf files. You can extend this tracking to any filetype with the file_extensions configuration attribute (see below).</p>
+<p>For any visit where this is no source or subsource set, parses the traffic source information available from the Google Analytics cookie.</p>
+
+<ul>
+<li>Sets 'BSD source' to medium_source</li>
+<li>Sets BSD subsource to campaign_content_term, when available.</li>
+</ul>
 
 <h2>
 <a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
@@ -129,7 +134,7 @@
 <li>
 <code>noloe</code> - Set to <code>true</code> to disable LOE usage. (Default: <code>false</code>)</li>
 <li>
-<code>file_extensions</code> - tracks clicks on files with extensions matching a pipe-separated list . If no extensions are specified, will only track clicks on pdfs. You can disable all file click tracking by setting file_extension</li>
+<code>file_extensions</code> - tracks clicks on files with extensions matching a pipe-separated list. If no extensions are specified, will only track clicks on pdfs. You can disable all file click tracking by setting file_extension to an empty string.</li>
 </ul>
 
 <p>Example:</p>
