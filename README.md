@@ -29,6 +29,8 @@ In order to correctly install the `ga_integration-min.js` snippet, you need to b
 <h3>E-Commerce</h3>
 All contributions are tracked by default as e-commerce transactions, with the product name set to the form name and the category set to the type of contribution. Different types include the various combinations of Recurring, Quick Donate, and Ticket-based contributions. 
 
+For E-Commerce tracking to work consistently across all Tools page types, you should have "Enable Tracking" set to "Yes" on all donation pages.
+
 <h3>GA Event Categories</h3>
 - Completions: Tracks completed BSD Actions in the case of signups, ecommerce and quick-donate opt-in. The ecommerce event is duplicative of the E-Commerce module data, but is less accurate because the associated values are rounded.
 - File Clicks: tracks clicks on files with the the `file_extensions` configuration attribute (see below). If no extensions are specified, will only track clicks on pdfs.
