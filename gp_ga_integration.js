@@ -231,10 +231,10 @@ _gaq.push(['_setSiteSpeedSampleRate', 10],["_setAllowAnchor", true], ["_setAllow
 	5: Store the 'subsource' parameter. 
 	*/
 	if (get.source) {
-		analytics.custom(1, 'Source', get.source);
+		//analytics.custom(1, 'Source', get.source);
 	}
 	if (get.subsource) {
-		analytics.custom( 5, 'Subsource', get.subsource);
+		//analytics.custom( 5, 'Subsource', get.subsource);
 	}
 	if (readCookie("msid")) {
 		var msid = ga_integration_config.msid_seed ? ""+(parseInt(readCookie("msid"), 16)^ga_integration_config.msid_seed) : readCookie("msid");
@@ -545,74 +545,8 @@ _gaq.push(['_setSiteSpeedSampleRate', 10],["_setAllowAnchor", true], ["_setAllow
 			/*
 			This closure encapsulates the GA UTMZ -> BSD Source integration
 			*/
-			(function() {
-				if(ga_integration_config.nospud === true || ga_integration_config.nocookie === true){ //Exit if they've set 'nospud' on the config object
-					return;
-				}
-				var utmz = readCookie('__utmz') || "";
-
-				/*
-				Only continue if:
-				 - SPUD cookie isn't set AND source isn't set
-				 - OR: utmz cookie is set, and the hash of the utmz cookie is different than the hash of the bsdzh cookie (ie, campaign info has changed)
-				*/
-				if ((!readCookie('spud') && !get.source  &&  !readCookie("source") ) || (utmz && hash(utmz).toString() !== readCookie('__bsdzh'))) {
-
-					//SPUD JSONP endpoint, with optional bsddomain configuration
-					var spudurl = (ga_integration_config.bsddomain  ? ga_integration_config.bsddomain : "") + "/page/spud?jsonp=?";
-					
-					var callback = function() {
-						var arg = {};
-						var pairs = utmz.split('.').slice(4).join('.').split('|'); //this isolates the campaign information peace of the utmz cookie, and then splits on | to make each array item a meaningful key=val pair. 
-						var vals = {};
-						$.each(pairs, function(i,v ){
-							var temp = v.split("=");
-							if(temp[1] && !temp[1].match(/^\(.*\)$/)){ //make sure value exists and it's not of the form (foo)
-								vals[temp[0]] = decodeURIComponent(temp[1]);
-							}
-						});
-						if (vals.utmgclid) { //Means it's google cpc.
-							arg.source = 'cpc_google';
-							arg.subsource = vals.utmctr;
-						} 
-						else {
-							var subsource = [];
-							$.each(vals, function(k,v){
-								if(k!=="utmcmd" && k!=="utmcsr" && k!=="utmcct"){ //save all the values except source and medium and content
-									subsource.push(v);
-								}
-							});
-							if(vals.utmcmd && vals.utmcsr){
-								arg.source =  vals.utmcmd + '_' + vals.utmcsr; //set source as medium_source
-							}
-							arg.subsource = subsource.sort().join('_'); //sets subsource as campaign_content_term, but excluding empty values.
-						}
-						
-						/*Set source and subsource cookies if applicable*/
-						if(get.source || arg.source){
-							createCookie("source", get.source || arg.source, 7);							
-						}
-						if(get.subsource || arg.subsource){
-							createCookie("subsource", get.subsource || arg.subsource, 7);
-						}						
-					}	;
-				
-					//set the bsdzh cookie with a hashed value of the utmz cookie, so this code section only runs once per session at most, unless the campaign changes.
-					createCookie("__bsdzh", hash(utmz));
-					if (readCookie('spud')) { //if spud is set, there's a risk source and subsource are already configured. If they aren't set, run callback()	
-						$.ajax({url: spudurl ,dataType: "jsonp",data: {type: "getm",field: "source,subsource"},jsonp: "jsonp",
-							success: function(old){
-								if (!(old.source || old.subsource)) {
-									callback();
-								}
-							}
-						});
-					} else { //no spud cookie means there's no risk of overwriting any existing values, since they aren't set.
-						callback();
-					}
-				
-				}
-			})();
+			
+			// Removed source / subsource tracking
 			
 			/*
 					SOCIAL PLUGIN TRACKING
